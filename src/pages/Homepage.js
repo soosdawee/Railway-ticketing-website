@@ -2,17 +2,12 @@ import React, {useState} from 'react'
 import {useQuery, gql} from '@apollo/client'
 
 const CITIES = gql`
-    query GetCities {
-        cities {
-        data {
-            id,
-            attributes {
-            name,
-            body
-            }
-        }
-        }
+query GetCities {
+    cities {
+        name,
+      description
     }
+}
 `
 
 const ReadMore = ({children}) => {
@@ -42,14 +37,12 @@ export default function HomePage() {
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error</p>
 
-    console.log(data.cities.data)
-
     return (
       <div>
-          {data.cities.data.map(city => (
+          {data.cities.map(city => (
               <div key={city.id} className='city-card'>
-                  <h2>{city.attributes.name}</h2>
-                  <ReadMore>{city.attributes.body}</ReadMore>
+                  <h2>{city.name}</h2>
+                  <ReadMore>{city.description}</ReadMore>
                   
               </div>
           ))}
